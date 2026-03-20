@@ -53,7 +53,7 @@ impl AcrossWithAuthorizationContract {
     }
 
     pub async fn load(client: Client, contract_address: &str, signer: SecretKey) -> Result<Self> {
-        let contract_json = include_str!("../../../eth/artifacts/contracts/AcrossWithAuthorization.sol/AcrossWithAuthorization.json");
+        let contract_json = include_str!("../../../tempo/artifacts/contracts/AcrossWithAuthorization.sol/AcrossWithAuthorization.json");
         let contract = client.load_contract_from_str(contract_address, contract_json)?;
         Ok(Self::new(
             client,

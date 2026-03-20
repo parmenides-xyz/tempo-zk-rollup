@@ -56,7 +56,7 @@ impl USDCContract {
     }
 
     pub async fn load(client: Client, usdc_contract_addr: &str, signer: SecretKey) -> Result<Self> {
-        let contract_json = include_str!("../../../eth/artifacts/contracts/IUSDC.sol/IUSDC.json");
+        let contract_json = include_str!("../../../tempo/artifacts/contracts/IUSDC.sol/IUSDC.json");
         let contract = client.load_contract_from_str(usdc_contract_addr, contract_json)?;
         let domain_separator = client
             .query::<H256, _, _, _>(

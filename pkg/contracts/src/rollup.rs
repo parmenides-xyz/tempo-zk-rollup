@@ -184,7 +184,7 @@ impl RollupContract {
         signer: SecretKey,
     ) -> Result<Self> {
         let contract_json =
-            include_str!("../../../eth/artifacts/contracts/rollup/RollupV6.sol/RollupV6.json");
+            include_str!("../../../tempo/artifacts/contracts/rollup/RollupV6.sol/RollupV6.json");
         let contract = client.load_contract_from_str(rollup_contract_addr, contract_json)?;
 
         let domain_separator = client

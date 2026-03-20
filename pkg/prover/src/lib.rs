@@ -501,7 +501,7 @@ impl Prover {
 //     fn contract(addr: Address) -> RollupContract {
 //         let rpc = std::env::var("ETHEREUM_RPC").unwrap_or("http://localhost:8545".to_owned());
 //         let web3 = web3::Web3::new(web3::transports::Http::new(&rpc).unwrap());
-//         let contract = include_bytes!("../../../eth/artifacts/contracts/Rollup.sol/Rollup.json");
+//         let contract = include_bytes!("../../../tempo/artifacts/contracts/Rollup.sol/Rollup.json");
 //         let contract = serde_json::from_slice::<serde_json::Value>(contract).unwrap();
 //         let contract =
 //             serde_json::from_value::<ethabi::Contract>(contract.get("abi").unwrap().clone())
