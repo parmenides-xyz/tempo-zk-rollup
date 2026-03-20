@@ -1,66 +1,43 @@
-## Foundry
+# ZK Rollup on Tempo
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Reference implementation for first ZK rollup on [Tempo](https://tempo.xyz)—enables private UTXO-based stablecoin transfers that settle on Tempo L1.
 
-Foundry consists of:
+## Deployed (Tempo Mainnet)
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+| Contract | Address |
+|----------|---------|
+| Rollup | [`0xbFe5aafd3B85AaD2daCa84968Ae64FD534555776`](https://explore.tempo.xyz/address/0xbFe5aafd3B85AaD2daCa84968Ae64FD534555776) |
 
-## Documentation
+## Quick Start
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+git clone https://github.com/danielyim/tempo-zk-rollup.git
+cd tempo-zk-rollup
+git lfs pull
+forge install
+cargo build --release --bin node --bin agent
 ```
 
-### Test
+### Run
 
-```shell
-$ forge test
-```
+```bash
+# Terminal 1: Validator
+cargo run --release --bin node -- \
+  --eth-rpc-url=https://rpc.tempo.xyz \
+  --rollup-contract-addr=0xbFe5aafd3B85AaD2daCa84968Ae64FD534555776 \
+  --secret-key=$KEY --p2p-laddr=/ip4/127.0.0.1/tcp/5000
 
-### Format
+# Terminal 2: Prover
+cargo run --release --bin node -- \
+  --eth-rpc-url=https://rpc.tempo.xyz \
+  --rollup-contract-addr=0xbFe5aafd3B85AaD2daCa84968Ae64FD534555776 \
+  --secret-key=$KEY --mode=prover \
+  --db-path=~/.tempo-rollup/prover/db \
+  --smirk-path=~/.tempo-rollup/prover/smirk \
+  --rpc-laddr=0.0.0.0:8081 \
+  --p2p-laddr=/ip4/127.0.0.1/tcp/5001 \
+  --p2p-dial=/ip4/127.0.0.1/tcp/5000
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+# Terminal 3: Mint $0.10
+TEMPO_PRIVATE_KEY=$KEY cargo run --release --bin agent -- mint 100000
 ```
