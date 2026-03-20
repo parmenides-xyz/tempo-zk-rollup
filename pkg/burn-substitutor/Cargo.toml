@@ -1,0 +1,19 @@
+[package]
+name = "burn-substitutor"
+version = "1.3.0"
+edition = "2021"
+
+[dependencies]
+contracts = { workspace = true }
+primitives = { workspace = true }
+rpc = { workspace = true }
+zk-circuits = { workspace = true }
+zk-primitives = { workspace = true }
+
+clap = { workspace = true }
+eyre = { workspace = true }
+reqwest = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }

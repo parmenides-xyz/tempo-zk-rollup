@@ -1,0 +1,33 @@
+# Build artifacts
+target/
+out/
+cache/
+
+# SRS params (large files, use git-lfs or download separately)
+fixtures/params/*.srs
+
+# Node data
+.tempo-rollup/
+.polybase/
+
+# Keys and secrets
+*.key
+*.secret
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Foundry
+broadcast/
+
+# Node modules
+node_modules/

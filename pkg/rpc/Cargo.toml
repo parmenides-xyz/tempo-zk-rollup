@@ -1,0 +1,33 @@
+[package]
+name = "rpc"
+version = "1.3.0"
+edition = "2021"
+
+[dependencies]
+prover = { workspace = true }
+zk-circuits = { workspace = true }
+
+actix-cors = { workspace = true }
+actix-server = { workspace = true }
+actix-web = { workspace = true }
+chrono = { workspace = true }
+clap = { workspace = true }
+derive_more = { workspace = true }
+eyre = { workspace = true }
+futures = { workspace = true }
+futures-util = { workspace = true }
+hex = { workspace = true }
+sentry = { workspace = true }
+sentry-tracing = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-stackdriver = { workspace = true }
+tracing-subscriber = { workspace = true }
+lazy_static = { workspace = true }
+opentelemetry = { workspace = true }
+opentelemetry_sdk = { workspace = true }
+opentelemetry-otlp = { workspace = true }
+tracing-opentelemetry = { workspace = true }
+base64 = { workspace = true }

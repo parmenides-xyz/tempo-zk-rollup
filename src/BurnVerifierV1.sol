@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.20;
+
+import "./Verifier.sol";
+
+contract BurnVerifierV1 is Verifier {
+    /**********
+     * Errors *
+     **********/
+
+    /// @dev Thrown when aggregate zk proof verification is failed.
+    error VerificationFailed();
+
+    /*************
+     * Constants *
+     *************/
+
+    /// @notice The address of highly optimized plonk verifier contract.
+    address public immutable plonkVerifier;
+
+    /***************
+     * Constructor *
+     ***************/
+
+    constructor(address _verifier) {
+        plonkVerifier = _verifier;
+    }
+
+    /*************************
+     * Public View Functions *
+     *************************/
+
+    function verify(
+        bytes calldata proof,
+        // Start of instances. Be careful reordering these because of the `calldatacopy` below
+        // [addr, nullifier, value, source, root]
+        bytes32[5] calldata instances
+    ) external view {
+        for (uint256 i = 0; i < 5; i++) {
+            requireValidFieldElement(instances[i]);
+        }
+
+        address _verifier = plonkVerifier;
+        bool success;
+
+        uint instancesLength = 5 * 32; // 32 bytes per input, 5 inputs
+        bytes memory data = new bytes(instancesLength + proof.length);
+
+        assembly {
+            calldatacopy(add(data, 32), instances, instancesLength)
+            calldatacopy(
+                add(add(data, 32), instancesLength),
+                proof.offset,
+                proof.length
+            )
+
+            success := staticcall(
+                gas(),
+                _verifier,
+                // start of data
+                add(data, 32),
+                // length
+                mload(data),
+                0x00,
+                0x00
+            )
+        }
+
+        if (!success) {
+            revert VerificationFailed();
+        }
+    }
+}
